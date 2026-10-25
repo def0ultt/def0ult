@@ -29,6 +29,13 @@ analytics:
     id:
 plugins:
   - jekyll-archives
+jekyll-archives:
+  enabled:
+    - categories
+  layouts:
+    category: category
+  permalinks:
+    category: /categories/:name/
 collections:
   tabs:
     output: true
