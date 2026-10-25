@@ -45,8 +45,6 @@ exclude:
   - Gemfile.lock
   - vendor
   - README.md
-  - SUMMARY.md
-  - gitbook-docs.yaml
 defaults:
   - scope:
       path: ""

@@ -1,19 +1,20 @@
-# AmirSec | Security Research & Notes
+# def0ult | Security Research & Notes
 
-Welcome to my personal cybersecurity knowledge base, research blog, and write-up archive.
+Welcome to my personal cybersecurity research blog.
 
-Here you will find real-world vulnerability research, bug bounty walkthroughs, CVE analyses, CTF write-ups, and in-depth technical tutorials.
+The blog contains research, experiments, write-ups, CTF labs, infrastructure notes, and technical projects.
 
 ---
 
-### Navigation
+### Blog
 
-- [Write-ups](writeups/README.md) — Bug bounty disclosures, CVE root-cause analyses, and CTF challenges.
-- [Tutorials & Concepts](tutorials/README.md) — Technical breakdowns of web vulnerabilities, exploitation mechanics, and defense strategies.
+- [Live site](https://def0ultt.github.io/def0ult/)
+- [Categories](https://def0ultt.github.io/def0ult/tabs/categories/)
+- [About](https://def0ultt.github.io/def0ult/tabs/about/)
 
 ---
 
 ### Connect & Research
 
-- **GitHub**: [github.com](https://github.com/)
-- **Focus Areas**: Web Application Security, API Security, Authorization Flaws (IDOR/BOLA), Business Logic Vulnerabilities.
+- **GitHub**: [def0ultt](https://github.com/def0ultt)
+- **Medium**: [@raissiamir797](https://medium.com/@raissiamir797)
