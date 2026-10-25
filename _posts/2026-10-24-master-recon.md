@@ -5,10 +5,6 @@ date: 2026-10-24
 categories:
   - reconnaissance
   - bug-bounty
-tags:
-  - shodan
-  - urlscan
-  - virustotal
 ---
 
 # Master Recon for Bug Hunters and Pentesters — Part 1: Shodan & URLScan \&VirusTotal — Advanced Tricks
@@ -34,7 +30,7 @@ However, here I will focus on useful tricks that can help you find things that o
 From the terminal, run:
 
 ```bash
-cat subdomain.txt | httpx -favicon
+ cat subdomain.txt | httpx -favicon
 ```
 
 This will help you collect the favicon information for your subdomains.
@@ -98,7 +94,7 @@ If you find an IP address that returns **403 Forbidden** or **Bad Request**, you
 &#x20;try  fuzz the `Host` header using the subdomains you discovered during recon:
 
 ```bash
-ffuf -u http://13.225.63.221 -H "Host: FUZZ" -ic -c -w ./subdomain.txt -r
+ ffuf -u http://13.225.63.221 -H "Host: FUZZ" -ic -c -w ./subdomain.txt -r
 ```
 
 In this example, the IP initially returns a `403` response, but some hostnames may return a different response, such as `200 OK`.
@@ -126,7 +122,7 @@ domain:admin*.adobe.com
 If you want to quickly extract URLs from the terminal, you can use this simple `curl` command:
 
 ```bash
-curl -s 'https://urlscan.io/api/v1/search/?q=domain:www.adobe.com' | jq -r '.results[].page.url'
+ curl -s 'https://urlscan.io/api/v1/search/?q=domain:www.adobe.com' | jq -r '.results[].page.url'
 ```
 
 However, there are other tools that can automate this process and provide better results. We’ll cover them in another section.
@@ -152,14 +148,14 @@ One useful trick is to extract URLs associated with a domain and search for pote
 For example:
 
 ```bash
-curl -s "https://www.virustotal.com/vtapi/v2/domain/report?apikey=$VT_API_KEY&domain=adobe.com" |
-jq -r '.detected_urls[]?.url' |grep -Ei 'token=|api[_-]?key=|apikey=|access[_-]?token=|auth(entication)?=|bearer[ =]|reset[-_]?password|forgot[-_]?password|registration|signup|sign[-_]?up|\.env([/?#]|$)|config(uration)?|credentials?|secret'
+ curl -s "https://www.virustotal.com/vtapi/v2/domain/report?apikey=$VT_API_KEY&domain=adobe.com" |
+ jq -r '.detected_urls[]?.url' |grep -Ei 'token=|api[_-]?key=|apikey=|access[_-]?token=|auth(entication)?=|bearer[ =]|reset[-_]?password|forgot[-_]?password|registration|signup|sign[-_]?up|\.env([/?#]|$)|config(uration)?|credentials?|secret'
 ```
 
 You can also search for URLs pointing to potentially sensitive file types:
 
 ```bash
-curl -s "https://www.virustotal.com/vtapi/v2/domain/report?apikey=$VT_API_KEY&domain=adobe.com" | jq -r '.detected_urls[]?.url' |grep -Ei '\.(zip|tar|dll|tar\.gz|tgz|gz|bz2|xz|7z|rar|bak|backup|old|orig|swp|sql|db|sqlite|log|conf|config|ini|env|yml|yaml|xml|json|csv|md|txt|pdf|docx?|xlsx?|pptx?)(\?|#|$)'
+ curl -s "https://www.virustotal.com/vtapi/v2/domain/report?apikey=$VT_API_KEY&domain=adobe.com" | jq -r '.detected_urls[]?.url' |grep -Ei '\.(zip|tar|dll|tar\.gz|tgz|gz|bz2|xz|7z|rar|bak|backup|old|orig|swp|sql|db|sqlite|log|conf|config|ini|env|yml|yaml|xml|json|csv|md|txt|pdf|docx?|xlsx?|pptx?)(\?|#|$)'
 ```
 
 These filters can help you quickly identify interesting URLs that may deserve further manual investigation.
@@ -175,11 +171,11 @@ For Shodan, you can use the **Shodan CLI**, but I recommend using the **Shodan w
 * Requires a free **Shodan API key**.
 
 ```bash
-# Single domain
-shosubgo -d target.com -s YourAPIKEY
+ # Single domain
+ shosubgo -d target.com -s YourAPIKEY
 
-# Multiple domains from a file
-shosubgo -f domains.txt -s YourAPIKEY
+ # Multiple domains from a file
+ shosubgo -f domains.txt -s YourAPIKEY
 ```
 
 #### Waymore
@@ -212,7 +208,7 @@ To make sure Waymore works properly, don't forget to add your API keys to:
 For fast passive URL extraction, you can use:
 
 ```bash
-waymore -i target.com -mode U -oU urls.txt
+ waymore -i target.com -mode U -oU urls.txt
 ```
 
 #### Download Archived Responses
@@ -226,7 +222,7 @@ Keep in mind that downloading responses can take more time and require significa
 To download archived responses specifically, use:
 
 ```bash
-waymore -i target.com -mode R -oR ./responses
+ waymore -i target.com -mode R -oR ./responses
 ```
 
 #### Full Recon: URLs + Responses
@@ -234,5 +230,5 @@ waymore -i target.com -mode R -oR ./responses
 To collect URLs and download archived responses at the same time:
 
 ```bash
-waymore -i target.com -mode B -oU urls.txt -oR ./responses
+ waymore -i target.com -mode B -oU urls.txt -oR ./responses
 ```

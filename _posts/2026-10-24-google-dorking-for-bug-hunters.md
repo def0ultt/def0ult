@@ -5,9 +5,6 @@ date: 2026-10-24
 categories:
   - reconnaissance
   - bug-bounty
-tags:
-  - google-dorking
-  - information-disclosure
 ---
 
 # Google Dorking for Bug Hunters: Real-World Case Studies

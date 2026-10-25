@@ -5,9 +5,6 @@ date: 2026-10-24
 categories:
   - windows
   - oscp
-tags:
-  - windows-internals
-  - access-control
 ---
 
 # Windows Internalsfor Cybersecurity & OSCP

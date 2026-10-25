@@ -5,10 +5,6 @@ date: 2026-10-24
 categories:
     - web-security
     - ci-cd
-tags:
-    - jenkins
-    - enumeration
-    - rce
 ---
 
 # Jenkins Security Testing

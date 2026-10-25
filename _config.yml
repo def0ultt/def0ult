@@ -2,7 +2,7 @@ theme: jekyll-theme-chirpy
 lang: en
 timezone: UTC
 title: def0ult
-tagline: Security research and technical notes
+tagline: "Security research, red team, and IT/DevOps"
 email: ""
 description: "Security research, offensive security, infrastructure, reconnaissance, and technical notes."
 baseurl: "/def0ult"
@@ -27,6 +27,10 @@ analytics:
     id:
 plugins:
   - jekyll-archives
+collections:
+  tabs:
+    output: true
+    sort_by: order
 exclude:
   - Gemfile
   - Gemfile.lock
