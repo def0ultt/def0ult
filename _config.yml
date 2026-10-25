@@ -3,6 +3,7 @@ lang: en
 timezone: UTC
 title: def0ult
 tagline: "Security research, red team, and IT/DevOps"
+avatar: /assets/anon.png
 email: ""
 description: "Security research, offensive security, infrastructure, reconnaissance, and technical notes."
 baseurl: "/def0ult"
