@@ -1,3 +1,16 @@
+---
+layout: post
+title: "Master Recon for Bug Hunters and Pentesters: Shodan, URLScan and VirusTotal"
+date: 2026-10-24
+categories:
+  - reconnaissance
+  - bug-bounty
+tags:
+  - shodan
+  - urlscan
+  - virustotal
+---
+
 # Master Recon for Bug Hunters and Pentesters — Part 1: Shodan & URLScan \&VirusTotal — Advanced Tricks
 
 Hi everyone! In this crash course, we'll learn about reconnaissance and how to use it to uncover what others may have missed.
@@ -42,7 +55,7 @@ domain="example.com"
 
 FOFA will return the discovered assets, and you can find the available favicon icons in the left sidebar.
 
-<figure><img src=".gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="/assets/gitbook/tutorials/image (2).png" alt=""><figcaption></figcaption></figure>
 
 #### Another Cool Trick in Shodan
 
@@ -58,11 +71,11 @@ ssl.cert.subject.cn:"adobe.com"
 
 I get **40,485 results**.
 
-<figure><img src=".gitbook/assets/image (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="/assets/gitbook/tutorials/image (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 You can narrow down the results by filtering based on things like the **IP address** or **HTTP title**.
 
-<figure><img src=".gitbook/assets/image (2) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="/assets/gitbook/tutorials/image (2) (1).png" alt=""><figcaption></figcaption></figure>
 
 Go to **More**, then select **HTTP Title**. After that, you can filter out common HTTP titles such as `404 Not Found`, `302 Found`, or other error pages.
 
@@ -74,13 +87,13 @@ ssl.cert.subject.cn:"adobe.com" -http.title:"404 Not Found" -http.title:"302 Fou
 
 As you can see, the number of results is reduced from **40,485 to 5,815**.
 
-<figure><img src=".gitbook/assets/image (3).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="/assets/gitbook/tutorials/image (3).png" alt=""><figcaption></figcaption></figure>
 
 #### Another Cool Trick
 
 If you find an IP address that returns **403 Forbidden** or **Bad Request**, you can try sending different `Host` headers based on the hostnames you discovered during reconnaissance. I’ll cover this technique in more detail in a later part of the blog.
 
-<figure><img src=".gitbook/assets/image (11).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="/assets/gitbook/tutorials/image (11).png" alt=""><figcaption></figcaption></figure>
 
 &#x20;try  fuzz the `Host` header using the subdomains you discovered during recon:
 
@@ -90,7 +103,7 @@ ffuf -u http://13.225.63.221 -H "Host: FUZZ" -ic -c -w ./subdomain.txt -r
 
 In this example, the IP initially returns a `403` response, but some hostnames may return a different response, such as `200 OK`.
 
-<figure><img src=".gitbook/assets/image (10).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="/assets/gitbook/tutorials/image (10).png" alt=""><figcaption></figcaption></figure>
 
 
 

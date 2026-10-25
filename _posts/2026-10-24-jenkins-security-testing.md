@@ -1,8 +1,21 @@
+---
+layout: post
+title: "Jenkins Security Testing"
+date: 2026-10-24
+categories:
+    - web-security
+    - ci-cd
+tags:
+    - jenkins
+    - enumeration
+    - rce
+---
+
 # Jenkins Security Testing
 
 
 
-<figure><img src=".gitbook/assets/image (40).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="/assets/gitbook/tutorials/image (40).png" alt=""><figcaption></figcaption></figure>
 
 In this blog, I’ll focus mainly on Jenkins misconfigurations and the different ways they can be discovered and abused during a penetration test. I won’t go deeply into Jenkins as part of a complete CI/CD pipeline or topics such as **supply-chain attacks**, exposed secrets, and attacks against the build process. I may cover these topics later and update the blog as soon as possible.
 
@@ -10,14 +23,14 @@ In this blog, I’ll focus mainly on Jenkins misconfigurations and the different
 
 #### Access Control
 
-<figure><img src=".gitbook/assets/image (30).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="/assets/gitbook/tutorials/image (30).png" alt=""><figcaption></figcaption></figure>
 
 * **Anyone can do anything**: the most danager one Even anonymous access can administrate the server\[
 * **Legacy mode**: Same as Jenkins <1.164. If you have the **“admin” role**, you’ll be granted **full control** over the system, and **otherwise** (including **anonymous** users) you’ll have **read** access
 * **Logged-in users can do anything**: In this mode, every **logged-in user gets full control** of Jenkins. The only user who won’t have full control is **anonymous user**, who only gets **read access** this if combine with allow signup will be make any one in network to take full adminstarter
 * **Matrix-based security**: You can configure **who can do what** in a table. Each **column** represents a **permission**. Each **row** **represents** a **user or a group/role.** This includes a special user ‘**anonymous**’, which represents **unauthenticated users**, as well as ‘**authenticated**’, which represents **all authenticated users**. this is the most save configriation if conifger correct
 
-<figure><img src=".gitbook/assets/image (31).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="/assets/gitbook/tutorials/image (31).png" alt=""><figcaption></figcaption></figure>
 
 ### Jenkins Nodes, Agents
 
@@ -29,7 +42,7 @@ From a pentesting perspective, it is important to identify **where the agent is 
 
 The Jenkins **`/oops (404 page)`** page can disclose the running **Jenkins version**. Once the version is identified, it can be compared against known vulnerabilities and security advisories.
 
-<figure><img src=".gitbook/assets/image (32).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="/assets/gitbook/tutorials/image (32).png" alt=""><figcaption></figcaption></figure>
 
 A simple way to research the version is to search for queries such as:
 
@@ -49,16 +62,16 @@ Some of this enumeration can be automated using the Metasploit module:
 auxiliary/scanner/http/jenkins_enum
 ```
 
-<figure><img src=".gitbook/assets/image (34).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="/assets/gitbook/tutorials/image (34).png" alt=""><figcaption></figcaption></figure>
 
 Don't forget to review and change the default options when necessary. As shown in the image, the module initially returns **404 Not Found** because it is requesting the Jenkins instance under `/jenkins/`.\
 In newer Jenkins installations, Jenkins is often deployed at the root path (`/`) instead of `/jenkins/`. In this case, changing the `TARGETURI` option to `/` allows the module to work correctly.
 
-<figure><img src=".gitbook/assets/image (35).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="/assets/gitbook/tutorials/image (35).png" alt=""><figcaption></figcaption></figure>
 
 Another useful tool for Jenkins enumeration is **Nuclei**. You can use Jenkins-specific templates by specifying the `jenkins` tag:
 
-<figure><img src=".gitbook/assets/image (36).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="/assets/gitbook/tutorials/image (36).png" alt=""><figcaption></figcaption></figure>
 
 #### RCE
 
@@ -70,7 +83,7 @@ If the current user has permission to create or modify a Pipeline, a Pipeline ca
 
 From **New Item** create a new item and select **Pipeline**.
 
-<figure><img src=".gitbook/assets/image (37).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="/assets/gitbook/tutorials/image (37).png" alt=""><figcaption></figcaption></figure>
 
 In the **Pipeline** section, you can define the commands that should be executed. For example, the following Declarative Pipeline executes a reverse shell
 
@@ -94,7 +107,7 @@ From a penetration-testing perspective, the important point is that this command
 
 For example, an agent running inside a Docker container may give you command execution inside that container rather than directly on the underlying host
 
-<figure><img src=".gitbook/assets/image (38).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="/assets/gitbook/tutorials/image (38).png" alt=""><figcaption></figcaption></figure>
 
 #### RCE with Groovy Script
 
@@ -126,7 +139,7 @@ This method is relatively **noisy** because it requires creating a completely ne
 
 1.  Create a new project: Go to **New Item** and select **Freestyle project**.
 
-    <figure><img src=".gitbook/assets/image (39).png" alt=""><figcaption></figcaption></figure>
+    <figure><img src="/assets/gitbook/tutorials/image (39).png" alt=""><figcaption></figcaption></figure>
 2. Inside the **Build** section, select **Execute shell** and enter your command or payload.\
    Pasted image 20260928165827.png
 

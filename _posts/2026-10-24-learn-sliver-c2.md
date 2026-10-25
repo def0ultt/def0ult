@@ -1,3 +1,15 @@
+---
+layout: post
+title: "Learn Sliver C2: A Practical Guide"
+date: 2026-10-24
+categories:
+  - red-team
+  - command-and-control
+tags:
+  - sliver
+  - c2
+---
+
 # Learn Sliver C2: A Practical Guide
 
 ## Introduction
@@ -10,11 +22,11 @@ Some of the things I like about this tool:
 * **Cross-compilation is simple** thanks to Go’s toolchain. You can build for **Windows, Linux, and macOS**, across both **x86 and ARM architectures**, from the same codebase.
 * **Completely open source**, so there’s no need for cracked or pirated versions. You can **audit the code, customize it, and extend it**, which makes it especially useful for researchers and security engineers who want to understand or modify how things work internally.
 
-<figure><img src=".gitbook/assets/image (12).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="/assets/gitbook/tutorials/image (12).png" alt=""><figcaption></figcaption></figure>
 
 ## Architecture
 
-<figure><img src=".gitbook/assets/ChatGPT Image Sep 10, 2026, 11_06_44 AM.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="/assets/gitbook/tutorials/ChatGPT Image Sep 10, 2026, 11_06_44 AM.png" alt=""><figcaption></figcaption></figure>
 
 At a high level, the Sliver architecture is pretty straightforward. We have **operators**, the **Sliver server**, and the **implants/slivers** running on the target.
 

@@ -1,0 +1,42 @@
+theme: jekyll-theme-chirpy
+lang: en
+timezone: UTC
+title: def0ult
+tagline: Security research and technical notes
+email: ""
+description: "Security research, offensive security, infrastructure, reconnaissance, and technical notes."
+baseurl: "/def0ult"
+url: "https://def0ultt.github.io"
+github:
+  username: def0ultt
+social:
+  name: def0ult
+  links:
+    - https://github.com/def0ultt
+markdown: kramdown
+permalink: /posts/:title/
+paginate: 10
+paginate_path: /page:num/
+toc: true
+comments:
+  provider:
+analytics:
+  google:
+    id:
+  goatcounter:
+    id:
+plugins:
+  - jekyll-archives
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - README.md
+  - SUMMARY.md
+  - gitbook-docs.yaml
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post

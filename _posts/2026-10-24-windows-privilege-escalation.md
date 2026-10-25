@@ -1,3 +1,15 @@
+---
+layout: post
+title: "Windows Privilege Escalation"
+date: 2026-10-24
+categories:
+  - windows
+  - privilege-escalation
+tags:
+  - windows
+  - enumeration
+---
+
 # Windows Privilege Escalation
 
 

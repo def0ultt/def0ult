@@ -1,3 +1,15 @@
+---
+layout: post
+title: "Docker Container Escape Techniques"
+date: 2026-10-24
+categories:
+    - cloud
+    - containers
+tags:
+    - docker
+    - container-escape
+---
+
 # Page 1
 
 In this blog, I will go through some common techniques that can allow an attacker to escape a Docker container.
@@ -45,7 +57,7 @@ The following conditions are required:
 
 #### Example
 
-<figure><img src=".gitbook/assets/image (27).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="/assets/gitbook/tutorials/image (27).png" alt=""><figcaption></figcaption></figure>
 
 **Exploit: Creating a Malicious Kernel Module**
 
@@ -131,7 +143,7 @@ If everything is configured correctly, the module will be loaded and its initial
 
 > **Note:** If you run into problems and need to remove the loaded module, you can use `rmmod` with the module name. To remove the generated build files, run `make clean`.
 
-<figure><img src=".gitbook/assets/Screenshot 2026-09-22 160303 - Copy.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="/assets/gitbook/tutorials/Screenshot 2026-09-22 160303 - Copy.png" alt=""><figcaption></figcaption></figure>
 
 
 
@@ -159,7 +171,7 @@ Once we have a shell inside a container, we can start by listing the contents of
 
 Common names for shared directories include `/mnt`, `/host`, `/data`, or descriptive names such as
 
-<figure><img src=".gitbook/assets/image (28).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="/assets/gitbook/tutorials/image (28).png" alt=""><figcaption></figcaption></figure>
 
 Here, `/hostsystem` looks interesting because it is not normally present in a standard container filesystem.
 
@@ -173,7 +185,7 @@ We can then search for sensitive files. For example, SSH keys are interesting be
 
 ### **Docker Sockets**
 
-<figure><img src=".gitbook/assets/docker-socket-daemon-diagram.svg" alt=""><figcaption></figcaption></figure>
+<figure><img src="/assets/gitbook/tutorials/docker-socket-daemon-diagram.svg" alt=""><figcaption></figcaption></figure>
 
 
 
@@ -202,7 +214,7 @@ ls -lha /run/docker.sock
 srw-rw---- 1 root docker 0 Sep 22 15:56 /run/docker.sock
 ```
 
-<figure><img src=".gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="/assets/gitbook/tutorials/image.png" alt=""><figcaption></figcaption></figure>
 
 Because our user is a member of the `docker` group, we have permission to interact with the Docker socket.
 
@@ -255,7 +267,7 @@ After starting the new container, we can check the mounted filesystem:
 root@new-container:/# ls /hostsystem/
 ```
 
-<figure><img src=".gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="/assets/gitbook/tutorials/image (1).png" alt=""><figcaption></figcaption></figure>
 
 
 
@@ -277,7 +289,7 @@ First, check which cgroup version is being used:
 mount | grep cgroup
 ```
 
-<figure><img src=".gitbook/assets/image (29).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="/assets/gitbook/tutorials/image (29).png" alt=""><figcaption></figcaption></figure>
 
 In my case, the system is using **cgroups v2**, so this technique will not work.
 
